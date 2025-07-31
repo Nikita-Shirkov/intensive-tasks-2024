@@ -39,73 +39,31 @@ public class Task2 {
 
     public static void main(String[] args) {
 //        Для собственных проверок можете делать любые изменения в этом методе
-        // e-этаж, p-подъезд, k-номер квартиры.
-        Scanner vvod = new Scanner(System.in);
-        System.out.println("Введите количество этажей: ");
-        int e = vvod.nextInt();
-        System.out.println("Введите количество подъездов: ");
-        int p = vvod.nextInt();
-        System.out.println("Введите номер квартиры: ");
-        int k = vvod.nextInt();
-
-        if(k > (p*e*4)) {
-            System.out.println("Такой квартиры не существует");
-        }
-
-        if(k <= 0){
-            System.out.println("Некорректные входные данные");
-        }
-        int p1 = k / (e*4); // Заполнение подъезда
-        int k1 = k - (p1*e*4); // Номер квартиры относительно начала подъезда
-        double e1 = k1/4; // Сколько под квартирой этажей
-
-        if((Double)e1 == (Double)1.0) e1--;
-        int pozK = k1 - ((int)e1*4);
-        String poz = null;
-        switch(pozK){
-            case 1:
-                poz = "слева от лифта, влево";
-                break;
-            case 2:
-                poz = "слева от лифта, вправо";
-                break;
-            case 3:
-                poz = "справа от лифта, влево";
-                break;
-            case 4:
-                poz = "справа от лифта, вправо";
-                break;
-            case 0:
-                poz = "справа от лифта, вправо";
-                break;
-        }
-        //System.out.println("Квартира №" + k + " находится в подъезде №" + (m1 + 1) + " на " + ((int)n1 + 1)  + " этаже. " + pos);
-        System.out.println(k + " кв - " + (p1 + 1) + " подъезд, " + ((int)e1 + 1) + " этаж, " + poz);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        String result = getFlatLocation(2,2,12); //Этаж, Подъезд, Номер квартиры
+        System.out.println(result);
     }
 
     static String getFlatLocation(int floorAmount, int entranceAmount, int flatNumber) {
-        //        Место для вашего кода
 
-        return null; // Заглушка. При реализации - удалить
+        if(flatNumber > (entranceAmount*floorAmount*4)){return("Такой квартиры не существует");}
+        if(flatNumber <= 0){return("Некорректные входные данные");}
+
+        int entranceAmountONE = flatNumber / (floorAmount*4); // Заполнение подъезда
+        int flatNumberONE = flatNumber - (entranceAmountONE*floorAmount*4); // Номер квартиры относительно начала подъезда
+        double floorAmountONE = flatNumberONE/4; // Сколько под квартирой этажей
+
+        if (floorAmountONE == 1.0) floorAmountONE--;
+        int pozK = flatNumberONE - (int)floorAmountONE * 4; //Позиция квартиры относительно лифта
+        String poz = switch (pozK) {
+            case 1 -> "слева от лифта, влево";
+            case 2 -> "слева от лифта, вправо";
+            case 3 -> "справа от лифта, влево";
+            case 4, 0 -> "справа от лифта, вправо";
+            default -> null;
+        };
+        return (flatNumber + " кв - " + (entranceAmountONE + 1) + " подъезд, " + ((int)floorAmountONE + 1) + " этаж, " + poz);
+
     }
 }
+
+
